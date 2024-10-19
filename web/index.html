@@ -32,7 +32,7 @@
                 headers: {
                     'Content-Type': 'application/json; charset=UTF-8'
                 },
-                body: JSON.stringify({ name: cname, surname: csurname, email: cemail, password: password })
+                body: JSON.stringify({ name: cname, surname: csurname, email: cemail, password: cpassword })
             })
                 .then(r => r.text().then(console.log));
         }
