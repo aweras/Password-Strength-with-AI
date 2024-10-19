@@ -1,0 +1,56 @@
+body form {
+    align-self: center;
+    background-color: red;
+
+    border: 2px solid grey;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+
+    margin: auto;
+    padding: 10px;
+
+    width: max-content;
+    height: max-content;
+
+    transform: translate(0%, 50%);
+}
+
+body form input {
+    border-radius: 5px;
+    width: 200px;
+    margin: 10px;
+    padding: 10px;
+
+}
+
+#password_strength_bar {
+    height: 10px;
+    width: 200px;
+    color: white;
+    background-color: wheat;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
+#strength_bar {
+    width: 0px;
+    height: 10px;
+    border-radius: 10px;
+}
+
+.weak {
+    background-color: #ff4d4d;
+}
+
+.medium {
+    background-color: #ffcc00;
+}
+
+.strong {
+    background-color: #00cc00;
+}
