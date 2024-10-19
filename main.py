@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from user import User
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
@@ -10,25 +11,43 @@ users = []
 def get_user():
     return jsonify([user.to_dict() for user in users])
 
-@app.route("/user", methods=["POST"])
-def create_user():
+@app.route("/register", methods=["POST"])
+def register_user():
     data = request.get_json()
-
-    if not data:
-        return jsonify({"error": "No data provided"}), 400
     
-    name = data.get("name")
-    surname = data.get("surname")
-    email = data.get("email")
-    password = data.get("password")
+    if not data or not all(key in data for key in ("name", "surname", "password", "email")):
+        return jsonify({"error": "Missing fields"}), 400
 
-    if not name or not surname or not email or not password:
-        return jsonify({"error": "Invalid data"}), 400
+    existing_user = next((u for u in users if u.email == data["email"]), None)
+    if existing_user:
+        return jsonify({"error": "User already exists"}), 409
     
-    user = User(name, surname, password, email)
-    users.append(user)
+    hashed_password = generate_password_hash(data["password"])
 
-    return jsonify(user.to_dict()), 201
+    new_user = User(data["name"], data["surname"], hashed_password, data["email"])
+    users.append(new_user)
+
+    return jsonify(new_user.to_dict()), 201
+
+@app.route("/login", methods=["POST"])
+def login():
+    data = request.get_json()
+    
+    if not data or not all(key in data for key in ("email", "password")):
+        return jsonify({"error": "Missing fields"}), 400
+
+    email = data["email"]
+    password = data["password"]
+
+    user = next((u for u in users if u.email == email), None)
+
+    if user is None:
+        return jsonify({"error": "User not found"}), 404
+
+    if check_password_hash(user.password, password):
+        return jsonify({"message": "Login successful", "user": user.to_dict()}), 200
+    else:
+        return jsonify({"error": "Invalid password"}), 401
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
