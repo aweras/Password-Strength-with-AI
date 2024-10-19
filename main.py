@@ -11,6 +11,25 @@ users = []
 def get_user():
     return jsonify([user.to_dict() for user in users])
 
+@app.route("/register_pw", methods=["POST"])
+def register_user_password():
+    data = request.get_json()
+    
+    if not data or not all(key in data for key in ("name", "surname", "password", "email")):
+        return jsonify({"error": "Missing fields"}), 400
+
+    existing_user = next((u for u in users if u.email == data["email"]), None)
+    if existing_user:
+        return jsonify({"error": "User already exists"}), 409
+
+    # Create a new User instance without hashing for demonstration purposes
+    new_user = User(data["name"], data["surname"], data["password"], data["email"])
+    users.append(new_user)
+
+    # Return only the password
+    return jsonify({"password": new_user.password}), 201
+
+
 @app.route("/register", methods=["POST"])
 def register_user():
     data = request.get_json()
