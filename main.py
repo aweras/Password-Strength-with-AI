@@ -21,10 +21,8 @@ def register_user():
     existing_user = next((u for u in users if u.email == data["email"]), None)
     if existing_user:
         return jsonify({"error": "User already exists"}), 409
-    
-    hashed_password = generate_password_hash(data["password"])
 
-    new_user = User(data["name"], data["surname"], hashed_password, data["email"])
+    new_user = User(data["name"], data["surname"], data["password"], data["email"])
     users.append(new_user)
 
     return jsonify(new_user.to_dict()), 201
@@ -44,7 +42,7 @@ def login():
     if user is None:
         return jsonify({"error": "User not found"}), 404
 
-    if check_password_hash(user.password, password):
+    if user.password == password:  # This assumes the password is stored as plain text
         return jsonify({"message": "Login successful", "user": user.to_dict()}), 200
     else:
         return jsonify({"error": "Invalid password"}), 401
