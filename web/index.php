@@ -19,11 +19,22 @@
 
     </form>
     <script>
-        function checkPasswordStrength() {
-            const password = document.getElementById("password").value;
+        async function checkPasswordStrength() {
+            const cname = document.getElementById("name").value;
+            const csurname = document.getElementById("surname").value;
+            const cemail = document.getElementById("email").value;
+            const cpassword = document.getElementById("password").value;
             const strength_text = document.getElementById("password-strength-text");
 
-            strength_text.textContent = password;
+            await fetch('check_pass.php', {
+                method: 'POST',
+                mode: "no-cors",
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8'
+                },
+                body: JSON.stringify({ name: cname, surname: csurname, email: cemail, password: password })
+            })
+                .then(r => r.text().then(console.log));
         }
     </script>
 </body>
