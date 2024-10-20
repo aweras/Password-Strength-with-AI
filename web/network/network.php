@@ -11,8 +11,6 @@ function api_post($path, $data)
     header('Access-Control-Allow-Origin: *');
     $response = curl_exec($ch);
     curl_close($ch);
-    $response = json_decode($response, false);
-    $response = json_decode($response, false);
-
+    $response = json_decode($response);
     return $response;
 }

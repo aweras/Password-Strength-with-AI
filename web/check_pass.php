@@ -12,7 +12,7 @@ if (isset($content)) {
     $data->email = $content["email"];
     $data->password = $content["password"];
     $json = json_encode($data);
-    $response = api_post("/register", $json);
+    $response = api_post("/", $json);
 
     return $response;
 }
