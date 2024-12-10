@@ -10,6 +10,7 @@ if (isset($_SESSION['user_data'])) {
 <head>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <?php
 include "./network/network.php";
 if (isset($_POST["email"]) && isset($_POST["password"])) {
@@ -18,25 +19,22 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
     $data->password = $_POST["password"];
     $json_data = json_encode($data);
     $response = api_post("/login", $json_data);
-
-    if ($response->message == "Login successful") {
+    print_r ($response);
+    if ($response->statusCode == 200) {
         $_SESSION['user_data'] = $response->user;
         @header("Location: ./index.php");
-
         @exit();
     }
 }
 ?>
 
 <body>
-
     <form action="" method="POST">
         <input type="mail" placeholder="E-mail" id="email" name="email">
-        <input type="password" placeholder="Şifre" id="password" name="password">
+        <input type="password" placeholder="Password" id="password" name="password">
         <input type="submit" value="login">
-
+        <a href="./register.php">Register</a>
     </form>
-
 </body>
 
 </html>

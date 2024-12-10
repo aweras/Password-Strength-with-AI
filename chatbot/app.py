@@ -1,8 +1,5 @@
-from flask import Flask, request, jsonify
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
-
-app = Flask(__name__)
 
 model = OllamaLLM(model="llama3.2")
 template = """
@@ -27,10 +24,8 @@ Only return this information without additional explanations.
 prompt = ChatPromptTemplate.from_template(template)
 chain = prompt | model
 
-@app.route('/evaluate-password', methods=['POST'])
-def evaluate_password():
-    data = request.json
-    
+def evaluate_password(data):
+
     name = data.get('name')
     surname = data.get('surname')
     email = data.get('email')
@@ -42,8 +37,5 @@ def evaluate_password():
         "email": email,
         "password": password
     })
-    
-    return jsonify({"result": result})
+    return  result
 
-if __name__ == '__main__':
-    app.run(debug=True)
