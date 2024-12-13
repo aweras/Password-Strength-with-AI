@@ -10,7 +10,6 @@ function api_post($path, $data)
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     header('Access-Control-Allow-Origin: *');
     $response = curl_exec($ch);
-    print_r($response);
     $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE); //request code
     if(curl_errno($ch)) { //catch errors
         echo 'cURL error: ' . curl_error($ch);

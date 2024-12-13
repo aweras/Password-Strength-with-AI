@@ -1,12 +1,14 @@
-<?php session_start();
+<?php 
+session_start();
 if (isset($_SESSION['user_data'])) {
-    header("Location: index.php");
-    exit();
+    
+    exit(header("Location: index.php"));
 }
+
+
 ?>
 
 <html>
-
 <head>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -23,7 +25,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
     if ($response->statusCode == 200) {
         $_SESSION['user_data'] = $response->user;
         @header("Location: ./index.php");
-        @exit();
+        @exit;
     }
 }
 ?>
@@ -32,7 +34,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
     <form action="" method="POST">
         <input type="mail" placeholder="E-mail" id="email" name="email">
         <input type="password" placeholder="Password" id="password" name="password">
-        <input type="submit" value="login">
+        <input type="submit" value="login" >
         <a href="./register.php">Register</a>
     </form>
 </body>

@@ -17,9 +17,10 @@ Email: {email}
 Password: {password}
 
 Answer:
-Classify the password as 'Strong', 'Medium', or 'Weak'.
-Provide brief recommendations for improvement, and suggest a strong password.
-Only return this information without additional explanations.
+classification: Classify the password as 'Strong', 'Medium', or 'Weak'.
+recommendations: Provide brief recommendations for improvement.
+strong_password: Suggest a strong password.
+Only return this information without additional explanations with json formatting.
 """
 prompt = ChatPromptTemplate.from_template(template)
 chain = prompt | model
@@ -37,5 +38,6 @@ def evaluate_password(data):
         "email": email,
         "password": password
     })
+
     return  result
 
