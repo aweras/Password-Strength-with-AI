@@ -42,7 +42,7 @@ Installing dependencies
   pip install Flask
 ```
 
-Ollama Server and LLama3.1 needs to be downloaded with the following link:
+Ollama Server and LLama3.2 needs to be downloaded with the following link:
 https://ollama.com/
 
 
