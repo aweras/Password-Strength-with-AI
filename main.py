@@ -1,8 +1,15 @@
+import json
+
 from flask import Flask, jsonify, request
+
+import chatbot.app as chat
+
+from flask_cors import CORS
+
 from user import User
-from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+CORS(app)
 
 # This list will store all the users created
 users = []
@@ -24,7 +31,6 @@ def register_user():
 
     new_user = User(data["name"], data["surname"], data["password"], data["email"])
     users.append(new_user)
-
     return jsonify(new_user.to_dict()), 201
 
 @app.route("/login", methods=["POST"])
@@ -47,5 +53,12 @@ def login():
     else:
         return jsonify({"error": "Invalid password"}), 401
 
+@app.route('/evaluate-password', methods=['POST'])
+def evaluate():
+    data = json.loads(request.data)
+    result = chat.evaluate_password(data)
+    return result
+
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+    app.run(
+        debug=True, port=5000)
