@@ -1,18 +1,18 @@
 
 # AI-Powered Password Strength With AI 
 
-A full-stack project integrating a PHP frontend, Python Flask API, and the Llama 3.1 AI Model served via Ollama Server.
+A full-stack project integrating a PHP frontend, Python Flask API, and the Llama 3.2 AI Model served via Ollama Server.
 
 ## Overview  
 This project demonstrates how to build a web-based AI application using:  
 - **Frontend:** PHP hosted on XAMPP.  
 - **Backend:** Python Flask API for request handling.  
-- **AI Model:** Llama 3.1 AI Model served via Ollama Server.  
+- **AI Model:** Llama 3.2 AI Model served via Ollama Server.  
 
 ### Features  
 - User-friendly PHP-based frontend.  
 - Flask API will route data between the front end and the AI model.  
-- AI-driven responses powered by Llama 3.1.  
+- AI-driven responses powered by Llama 3.2.  
 
 
 
